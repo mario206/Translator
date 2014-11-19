@@ -92,7 +92,7 @@ void SelectedText::checkSelectedText()
 
         // 备份剪贴板信息
 
-        //m_lastString = m_board->text();
+        m_lastString = m_board->text();
         //qDebug() << "获取剪贴板内容" << m_lastString << endl;
         //拷贝一份原剪贴板信息
 
