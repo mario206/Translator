@@ -1,5 +1,6 @@
 #include "translator.h"
 #include <qDebug>
+
 Translator::Translator(QObject *parent) :
     QObject(parent)
 {
@@ -13,9 +14,7 @@ bool Translator::translateWord(QString word)
     QUrl url(query_url);
     m_reply = m_net_manager.get(QNetworkRequest(url));
     connect(m_reply,SIGNAL(finished()),this,SLOT(queryFinished()));
-
     return true;
-
 }
 
 bool Translator::translateSentences(QString sentences)
@@ -38,6 +37,7 @@ void Translator::queryFinished()
     // 返回出错
     if (!jsonDocument.isObject()) {
         qDebug() << "!jsonDocument.isObject()" << endl;
+
         return ;
     }
 
@@ -45,10 +45,12 @@ void Translator::queryFinished()
     // 查询出现错误
     if(result["errorCode"] != 0) {
         qDebug() << "查询出错内容" << endl;
+
         return;
     }
     if(result.find("basic") == result.end()) {
         qDebug() << "查不到所选内容" << endl;
+
         return;
     }
     QVector<QString> explains;
@@ -64,6 +66,7 @@ void Translator::queryFinished()
     //qDebug() <<  phonetic << endl;
     // 3.所查单词
     QString query = result["query"].toString();
+
     //qDebug() << query << endl;
     // 4.语音文件url
     QString voice_url = "http://dict.youdao.com/dictvoice?audio=" + query + "&keyfrom=deskdict.stroke&client=deskdict&id=537bacce025530026a26e561b9d9edcdd&vendor=youdao.fanyiindex&in=YoudaoDict_youdao.fanyiindex&appVer=5.4.46.5554&appZengqiang=0";
@@ -72,14 +75,12 @@ void Translator::queryFinished()
 
     emit translateFinished(word);
 
+
 }
 
-
-
-
-Words::Words(bool t_isword, QVector<QString> t_explains, QString t_phonetic,QString t_query, QString t_voice_url)
-    :isWord(t_isword),explains(t_explains),phonetic(t_phonetic),query(t_query),voice_url(t_voice_url)
+void Translator::translateWord()
 {
-
-
+    translateWord(word);
 }
+
+

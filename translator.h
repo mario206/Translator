@@ -8,17 +8,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QVector>
-
-class Words {
-
-public:
-    Words(bool, QVector<QString>,QString,QString, QString);
-    bool isWord;
-    QVector<QString> explains;
-    QString phonetic;
-    QString query;
-    QString voice_url;
-};
+#include <QThread>
+#include <words.h>
 
 class Translator : public QObject
 {
@@ -30,13 +21,15 @@ public:
     QNetworkAccessManager m_net_manager;
     QNetworkReply* m_reply;
     QString m_result;
+
 public slots:
     void queryFinished();
-
+    void translateWord();
 
 signals:
     void translateFinished(Words);
-public slots:
+public:
+    QString word;
 };
 
 

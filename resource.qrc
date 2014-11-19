@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>qss.qss</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>Altavoz.png</file>
+        <file>green.png</file>
+        <file>pink.png</file>
+        <file>ico.png</file>
+    </qresource>
+</RCC>

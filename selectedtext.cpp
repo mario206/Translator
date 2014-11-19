@@ -6,11 +6,17 @@ SelectedText* SelectedText::pthis = NULL;
 SelectedText::SelectedText(QObject *parent) :
     QObject(parent)
 {
+    // 划词没开启
+    working = false;
     pthis = this;
     // 初始化变量
     m_move = false;
     // 初始化剪贴板
     m_board = QApplication::clipboard();
+   // m_old_data = copyMimeData(m_board->mimeData());
+    m_old_data = new QMimeData();
+    m_lastString = "1";
+
     // 安装钩子
     installHook();
 
@@ -20,7 +26,6 @@ SelectedText::~SelectedText()
 {
     uninstallHook();
 }
-
 int SelectedText::mouseProc(int ncode, WPARAM wParam, LPARAM lParam)
 {
     MSLLHOOKSTRUCT* p = (MSLLHOOKSTRUCT*)lParam;
@@ -53,6 +58,7 @@ int SelectedText::mouseProc(int ncode, WPARAM wParam, LPARAM lParam)
 
 void SelectedText::installHook()
 {
+    working = true;
     MyHook = SetWindowsHookEx(WH_MOUSE_LL,
             (HOOKPROC)&SelectedText::mouseProc,   // 回调函数地址
             GetModuleHandle(NULL),
@@ -61,6 +67,7 @@ void SelectedText::installHook()
 
 void SelectedText::uninstallHook()
 {
+    working = false;
     // 卸载钩子
     UnhookWindowsHookEx(MyHook);
 
@@ -68,8 +75,6 @@ void SelectedText::uninstallHook()
 
 void SelectedText::checkSelectedText()
 {
-
-
 
     if(pthis->m_move) {
         qDebug() << "检测中" << endl;
@@ -82,22 +87,34 @@ void SelectedText::checkSelectedText()
         // 输出窗口句柄
         //qDebug() << (int)hwnd;
 
-
-
-
         // 备份剪贴板信息
+
         m_lastString = m_board->text();
+        qDebug() << "获取剪贴板内容" << m_lastString << endl;
         //拷贝一份原剪贴板信息
-        m_old_data = copyMimeData(m_board->mimeData());
-        connect(m_board,SIGNAL(dataChanged()),this,SLOT(textCopyFinished()));
+
+        //m_old_data = copyMimeData(m_board->mimeData());
+
+
 
         // 发送拷贝请求
-        SetForegroundWindow(m_hwnd);
 
+        SendMessage(m_hwnd,WM_COPY,0,0);
+        QString str = m_board->text();
+        if(!str.isEmpty() && str != m_lastString) {
+            emit newtextselected(str);
+        }
+        else
+        {
+        //SetForegroundWindow(m_hwnd);
+        connect(m_board,SIGNAL(dataChanged()),this,SLOT(textCopyFinished()));
         keybd_event(VK_CONTROL, 0x1D, KEYEVENTF_EXTENDEDKEY | 0, 0);
         keybd_event('C', 0x2E, KEYEVENTF_EXTENDEDKEY | 0, 0);
         keybd_event('C', 0x2E, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         keybd_event(VK_CONTROL, 0x1D, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+        }
+
+
     }
 
 }
@@ -115,26 +132,31 @@ void SelectedText::textCopyFinished()
     {
         qDebug() << str << endl;
         emit newtextselected(str);
+
+
     }
     else
     {
-         SendMessage(m_hwnd,WM_COPY,0,0);
-         str = m_board->text();
-         if(!str.isEmpty() && str != m_lastString) {
-             qDebug() << str << endl;
-             emit newtextselected(str);
-         }
+//         SendMessage(m_hwnd,WM_COPY,0,0);
+//         str = m_board->text();
+//         if(!str.isEmpty() && str != m_lastString) {
+//             qDebug() << str << endl;
+//             emit newtextselected(str);
+//         }
     }
+    qDebug() << "恢复原本剪贴板内容 ->>" << m_lastString << endl;
+    m_board = QApplication::clipboard();
+    m_board->setText("m_lastString");
   // 恢复剪贴板信息
-    m_board->setMimeData(m_old_data);
+    //QApplication::clipboard()->setMimeData(m_old_data);
 
 
 }
 
 QMimeData *SelectedText::copyMimeData(const QMimeData *mimeReference)
 {
-    QMimeData * mimeCopy = new QMimeData();
-
+        QMimeData *mimeCopy = new QMimeData();
+        //QMimeData *mimeCopy = m_old_data;
         foreach(QString format, mimeReference->formats())
         {
             // Retrieving data

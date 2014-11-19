@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <Winuser.h>
 #include <QMimeData>
+#include <MyGlobalShortcut/MyGlobalShortCut.h>
     // 全局键盘钩子
 
 class SelectedText : public QObject
@@ -34,13 +35,13 @@ public:
     QMimeData* m_old_data;      // 原剪贴板内容
     HWND m_hwnd;                // 要复制的窗口的句柄
     static SelectedText* pthis;
+    bool working;
 signals:
     void newtextselected(QString str);
-public:
+public slots:
 
 private slots:
     void textCopyFinished();
-
 private:
     QMimeData * copyMimeData(const QMimeData * mimeReference);  // 复制剪贴板内容
 
