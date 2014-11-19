@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include <QApplication>
 #include <QFile>
 int main(int argc, char *argv[])
@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     a.setStyle(file.readAll());
     /*w.setWindowFlags(Qt::Tool);*/ // 不在任务栏显示
     //w.show();
-    w.hide();
+    //w.hide();
 
     a.setQuitOnLastWindowClosed(false);
     return a.exec();

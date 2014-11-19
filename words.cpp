@@ -1,4 +1,4 @@
-#include "words.h"
+﻿#include "words.h"
 
 Words::Words()
 {

@@ -34,3 +34,4 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     resource.qrc
+RC_FILE = myapp.rc

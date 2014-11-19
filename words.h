@@ -1,4 +1,4 @@
-#include <QString>
+﻿#include <QString>
 #include <QVector>
 #ifndef WORDS_H
 #define WORDS_H

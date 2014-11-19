@@ -1,4 +1,4 @@
-#ifndef FORM_H
+﻿#ifndef FORM_H
 #define FORM_H
 
 #include <QWidget>
@@ -45,7 +45,6 @@ private:
 
 public slots:
     void getVoice();
-    void downloadFinished();
 public:
 
 private:

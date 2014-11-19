@@ -28,6 +28,7 @@ SelectedText::~SelectedText()
 }
 int SelectedText::mouseProc(int ncode, WPARAM wParam, LPARAM lParam)
 {
+
     MSLLHOOKSTRUCT* p = (MSLLHOOKSTRUCT*)lParam;
     switch(wParam)
     {
@@ -44,6 +45,7 @@ int SelectedText::mouseProc(int ncode, WPARAM wParam, LPARAM lParam)
 
         break;
     // 左键弹起，交给
+
     case WM_LBUTTONUP:
         pthis->m_up_pos = p->pt;
         pthis->checkSelectedText();
@@ -52,6 +54,7 @@ int SelectedText::mouseProc(int ncode, WPARAM wParam, LPARAM lParam)
         break;
     }
     return CallNextHookEx(pthis->MyHook,ncode,wParam,lParam);
+
 }
 
 
@@ -89,8 +92,8 @@ void SelectedText::checkSelectedText()
 
         // 备份剪贴板信息
 
-        m_lastString = m_board->text();
-        qDebug() << "获取剪贴板内容" << m_lastString << endl;
+        //m_lastString = m_board->text();
+        //qDebug() << "获取剪贴板内容" << m_lastString << endl;
         //拷贝一份原剪贴板信息
 
         //m_old_data = copyMimeData(m_board->mimeData());
@@ -101,18 +104,19 @@ void SelectedText::checkSelectedText()
 
         SendMessage(m_hwnd,WM_COPY,0,0);
         QString str = m_board->text();
-        if(!str.isEmpty() && str != m_lastString) {
+        if(str != m_lastString) {
             emit newtextselected(str);
         }
         else
         {
-        //SetForegroundWindow(m_hwnd);
+        SetForegroundWindow(m_hwnd);
         connect(m_board,SIGNAL(dataChanged()),this,SLOT(textCopyFinished()));
         keybd_event(VK_CONTROL, 0x1D, KEYEVENTF_EXTENDEDKEY | 0, 0);
         keybd_event('C', 0x2E, KEYEVENTF_EXTENDEDKEY | 0, 0);
         keybd_event('C', 0x2E, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         keybd_event(VK_CONTROL, 0x1D, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         }
+
 
 
     }
@@ -144,9 +148,9 @@ void SelectedText::textCopyFinished()
 //             emit newtextselected(str);
 //         }
     }
-    qDebug() << "恢复原本剪贴板内容 ->>" << m_lastString << endl;
-    m_board = QApplication::clipboard();
-    m_board->setText("m_lastString");
+    //qDebug() << "恢复原本剪贴板内容 ->>" << m_lastString << endl;
+    //m_board = QApplication::clipboard();
+    //m_board->setText("m_lastString");
   // 恢复剪贴板信息
     //QApplication::clipboard()->setMimeData(m_old_data);
 

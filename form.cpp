@@ -1,4 +1,4 @@
-#include "form.h"
+﻿#include "form.h"
 #include "ui_form.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -8,11 +8,12 @@
 
 bool Form::hadInit = false;
 Form* Form::lastWindow = NULL;
+
 Form *Form::Instance()
 {
     Form* w = new Form();
     if(lastWindow != NULL)
-        lastWindow->deleteLater();
+        lastWindow->hide();
 
     lastWindow = w;
     return w;
@@ -161,13 +162,6 @@ void Form::getVoice()
 
     m_reply = m_net_manager.get(QNetworkRequest(url));
     connect(m_reply,SIGNAL(finished()),this,SLOT(downloadFinished()));
-
-}
-
-void Form::downloadFinished()
-{
-     QMediaPlayer* player = new QMediaPlayer();
-
 
 }
 

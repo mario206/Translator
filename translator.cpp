@@ -1,4 +1,4 @@
-#include "translator.h"
+﻿#include "translator.h"
 #include <qDebug>
 
 Translator::Translator(QObject *parent) :
@@ -15,11 +15,6 @@ bool Translator::translateWord(QString word)
     m_reply = m_net_manager.get(QNetworkRequest(url));
     connect(m_reply,SIGNAL(finished()),this,SLOT(queryFinished()));
     return true;
-}
-
-bool Translator::translateSentences(QString sentences)
-{
-
 }
 
 void Translator::queryFinished()

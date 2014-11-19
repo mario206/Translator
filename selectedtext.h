@@ -1,9 +1,8 @@
-#ifndef SELECTEDTEXT_H
+﻿#ifndef SELECTEDTEXT_H
 #define SELECTEDTEXT_H
 
 #include <QObject>
-#include <Windef.h> // POINT
-#include <windows.h>
+#include <qt_windows.h>
 #include <QClipboard>
 #include <QApplication>
 #include <Winuser.h>
