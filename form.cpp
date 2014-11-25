@@ -204,8 +204,11 @@ void Form::timerEvent(QTimerEvent *)
     // 鼠标在窗体下面
     else
     {
+        qDebug() << "before addjust:" << rect;
+
 //        qDebug() << "鼠标在窗体下面";
-        rect.adjust(0,300,0,0);
+        rect.adjust(0,0,0,100);
+        qDebug() << "after addjust:" << rect;
 //        qDebug() << point;
 //        qDebug() << rect;
     }
