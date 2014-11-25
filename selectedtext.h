@@ -28,13 +28,16 @@ public:
     bool  m_move;               // 鼠标是否拖动
     POINT m_down_pos;           // 上次左键按下位置
     POINT m_up_pos;             // 此时左键弹起位置
-    HHOOK MyHook;
+
     QClipboard* m_board;
     QString m_lastString;       // 上次剪贴板中的内容
     QMimeData* m_old_data;      // 原剪贴板内容
-    HWND m_hwnd;                // 要复制的窗口的句柄
     static SelectedText* pthis;
     bool working;
+
+    HWND m_hwnd;                // 要复制的窗口的句柄
+    HHOOK MyHook;
+
 signals:
     void newtextselected(QString str);
 public slots:

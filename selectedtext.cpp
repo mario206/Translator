@@ -18,7 +18,7 @@ SelectedText::SelectedText(QObject *parent) :
     m_lastString = "1";
 
     // 安装钩子
-    installHook();
+   // installHook();
 
 }
 

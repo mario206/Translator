@@ -80,7 +80,6 @@ void Form::InitWordWindow()
 
     QLabel* phonetic = new QLabel(this);
     phonetic->setText("[" + m_word.phonetic + "]");
-
     QPushButton* btn = new QPushButton(this);
     connect(btn,SIGNAL(clicked()),this,SLOT(getVoice()));
 
@@ -142,7 +141,7 @@ void Form::InitWordWindow()
    // up->setContentsMargins(0,0,0,0);
     //up->setContentsMargins(1,1,1,1);
     this->setLayout(up);
-    setWindowOpacity(0.85);
+    setWindowOpacity(0.80);
     this->setMaximumWidth(600);
     this->setStyleSheet("background-color: rgb(255, 255, 255);");
     //this ->setAttribute(Qt::WA_TranslucentBackground);    
@@ -152,15 +151,17 @@ void Form::InitSentencesWindow()
 {
     QVBoxLayout* up = new QVBoxLayout;
     QLabel* word = new QLabel(this);
-    word->setMaximumWidth(600);
+
+
     word->setWordWrap(true);
     word->setText(sentences);
     word->setStyleSheet("color:#094;font-family: Verdana,Geneva,sans-serif;font-size:20px;font-weight:bold;line-height: 1.25em;");
     up->addWidget(word,Qt::AlignCenter);
     this->setLayout(up);
     setWindowOpacity(0.85);
-    //this->setMaximumWidth(600);
+    this->setMaximumWidth(600);
     this->setStyleSheet("background-color: rgb(255, 255, 255);");
+   // this ->setAttribute(Qt::WA_TranslucentBackground);
 }
 
 void Form::leaveEvent(QEvent *)

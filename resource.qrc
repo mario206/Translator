@@ -7,5 +7,7 @@
         <file>green.png</file>
         <file>pink.png</file>
         <file>ico.png</file>
+        <file>off.gif</file>
+        <file>on.gif</file>
     </qresource>
 </RCC>

@@ -38,6 +38,7 @@ private:
     SelectedText* m_text;
     QLabel* notice;
     int m_timer;
+    bool onNotice;
 
 
 };
