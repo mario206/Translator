@@ -136,7 +136,7 @@ void SelectedText::textCopyFinished()
     if(!str.isEmpty() && str != m_lastString)
     {
         //qDebug() << str << endl;
-        m_board->setText(m_lastString);
+        //m_board->setText(m_lastString);
         emit newtextselected(str);
 
 

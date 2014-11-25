@@ -147,7 +147,7 @@ void Translator::querySentencesFinished()
         return;
     }
     if(result.find("translateResult") == result.end()) {
-        qDebug() << "查不到所选内容" << endl;
+        //qDebug() << "查不到所选内容" << endl;
         return;
     }
 

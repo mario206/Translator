@@ -14,7 +14,7 @@ Form *Form::Instance()
     // 保证只有一个窗口存在
     Form* w = new Form();
     if(lastWindow != NULL)
-        lastWindow->hide(); 
+        lastWindow->hide();
     lastWindow = w;
     return w;
 }
@@ -166,7 +166,7 @@ void Form::InitSentencesWindow()
 
 void Form::leaveEvent(QEvent *)
 {
-    this->close();
+    //this->close();
 }
 
 

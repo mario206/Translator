@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     m_timer = 0;
     onNotice = false;
-    notice = new QLabel();
+
     //qDebug() << str2 << endl;
     //ui->label->setText(str2);
     m_text = new SelectedText();
@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     MyGlobalShortCut* shortcut = new MyGlobalShortCut("Alt+2",this);
     connect(shortcut,SIGNAL(activated()),this,SLOT(activate()));
-   // ui->pushButton->show();
     // 手动开启
+    activate();
     activate();
 
 
@@ -107,6 +107,8 @@ void MainWindow::noticeWindow()
 //    notice->setGeometry(cenX - notice->width()/2,cenY - notice->height()/2,notice->width(),notice->height());
 //    m_timer = startTimer(1000);
 
+    notice = new QLabel();
+
     onNotice = true;
 
     QMovie *movie;
@@ -125,6 +127,7 @@ void MainWindow::noticeWindow()
 
     movie->start();
     m_timer = startTimer(1000);
+
 }
 void MainWindow::timerEvent(QTimerEvent *)
 {
@@ -148,8 +151,8 @@ void MainWindow::newselectedtext(QString str)
 
 void MainWindow::translateWordFinished(Words word)
 {
-    qDebug() << "第一个查询窗口" << endl;
-    qDebug() << word.explains << endl;
+    //qDebug() << "第一个查询窗口" << endl;
+    //qDebug() << word.explains << endl;
     Form* window = Form::Instance();
     window->setWord(word);
     window -> setWindowFlags(Qt::WindowStaysOnTopHint|Qt::FramelessWindowHint);
@@ -162,12 +165,8 @@ void MainWindow::translateSentencesFinished(QString sentences)
     Form* window = Form::Instance();
     window->setSentences(sentences);
     window -> setWindowFlags(Qt::WindowStaysOnTopHint|Qt::FramelessWindowHint);
-    QPoint point = QCursor::pos();
     window -> show();
     adjustWindowPos(window);
-
-
-
 
 }
 
