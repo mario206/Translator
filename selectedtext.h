@@ -1,4 +1,4 @@
-﻿#ifndef SELECTEDTEXT_H
+#ifndef SELECTEDTEXT_H
 #define SELECTEDTEXT_H
 
 #include <QObject>
@@ -25,7 +25,7 @@ public:
     void uninstallHook();       // 卸载钩子
     void checkSelectedText();   // 检查是否有文本被选中
 
-    bool  m_move;                // 鼠标是否拖动
+    bool  m_move;               // 鼠标是否拖动
     POINT m_down_pos;           // 上次左键按下位置
     POINT m_up_pos;             // 此时左键弹起位置
     HHOOK MyHook;

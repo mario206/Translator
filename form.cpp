@@ -1,4 +1,4 @@
-﻿#include "form.h"
+#include "form.h"
 #include "ui_form.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -11,10 +11,10 @@ Form* Form::lastWindow = NULL;
 
 Form *Form::Instance()
 {
+    // 保证只有一个窗口存在
     Form* w = new Form();
     if(lastWindow != NULL)
-        lastWindow->hide();
-
+        lastWindow->hide(); 
     lastWindow = w;
     return w;
 }
@@ -22,13 +22,19 @@ Form *Form::Instance()
 void Form::setWord(Words Word)
 {
     m_word = Word;
-    InitWindow();
+    InitWordWindow();
+}
+
+void Form::setSentences(QString text)
+{
+    sentences = text;
+    InitSentencesWindow();
 }
 
 void Form::show()
 {
     m_timerId = startTimer(500);
-    return QWidget::show();
+   this->setVisible(true);
 }
 
 
@@ -55,7 +61,7 @@ Form::Form(QWidget *parent, Words word)
 //        explain += "\n";
 //    }
 //    ui->explains->setText(explain);
-      InitWindow();
+      InitWordWindow();
 }
 
 Form::~Form()
@@ -63,7 +69,7 @@ Form::~Form()
     delete ui;
 }
 
-void Form::InitWindow()
+void Form::InitWordWindow()
 {
 
     QVBoxLayout* up = new QVBoxLayout;
@@ -128,8 +134,6 @@ void Form::InitWindow()
         hl->addWidget(left);
         hl->addWidget(right,Qt::AlignLeft);
         down->addLayout(hl);
-
-
     }
 
     //up->addLayout(h);
@@ -141,14 +145,29 @@ void Form::InitWindow()
     setWindowOpacity(0.85);
     this->setMaximumWidth(600);
     this->setStyleSheet("background-color: rgb(255, 255, 255);");
-    //this ->setAttribute(Qt::WA_TranslucentBackground);
+    //this ->setAttribute(Qt::WA_TranslucentBackground);    
+}
 
+void Form::InitSentencesWindow()
+{
+    QVBoxLayout* up = new QVBoxLayout;
+    QLabel* word = new QLabel(this);
+    word->setMaximumWidth(600);
+    word->setWordWrap(true);
+    word->setText(sentences);
+    word->setStyleSheet("color:#094;font-family: Verdana,Geneva,sans-serif;font-size:20px;font-weight:bold;line-height: 1.25em;");
+    up->addWidget(word,Qt::AlignCenter);
+    this->setLayout(up);
+    setWindowOpacity(0.85);
+    //this->setMaximumWidth(600);
+    this->setStyleSheet("background-color: rgb(255, 255, 255);");
 }
 
 void Form::leaveEvent(QEvent *)
 {
     this->close();
 }
+
 
 void Form::getVoice()
 {
@@ -162,7 +181,6 @@ void Form::getVoice()
 
     m_reply = m_net_manager.get(QNetworkRequest(url));
     connect(m_reply,SIGNAL(finished()),this,SLOT(downloadFinished()));
-
 }
 
 
@@ -174,10 +192,28 @@ void Form::timerEvent(QTimerEvent *)
 //    qDebug() << "point:" << point << endl;
 //    qDebug() << "rect:" << rect << endl;
 
-    rect.adjust(0,-100,0,0);
+    // 鼠标在窗体上面
+    if(rect.y() > point.y())
+    {
+//        qDebug() << "鼠标在窗体上面";
+        rect.adjust(0,-100,0,0);
+//        qDebug() << point;
+//        qDebug() << rect;
+    }
+    // 鼠标在窗体下面
+    else
+    {
+//        qDebug() << "鼠标在窗体下面";
+        rect.adjust(0,300,0,0);
+//        qDebug() << point;
+//        qDebug() << rect;
+    }
+
     if(!rect.contains(point))
     {
         killTimer(m_timerId);
         this->hide();
     }
+
+
 }

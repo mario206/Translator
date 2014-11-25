@@ -1,4 +1,4 @@
-﻿#ifndef MAINWINDOW_H
+#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -25,9 +25,14 @@ public slots:
     // 有新的剪贴板内容
     void newselectedtext(QString str);
     // 新的单词查询完成
-    void translateFinished(Words word);
+    void translateWordFinished(Words word);
+    // 新的句子查询完成
+    void translateSentencesFinished(QString);
     // 划词开关
     void activate();
+
+private:
+    void adjustWindowPos(Form* window);
 private:
     Ui::MainWindow *ui;
     SelectedText* m_text;
@@ -36,18 +41,5 @@ private:
 
 
 };
+#endif
 
-class MyThread : public QThread
-{
-    Q_OBJECT
-public:
-    MyThread(QObject* pare,QString str);
-    void run();
-private:
-    QString word;
-signals:
-    void translateFinished(Words word);
-
-};
-
-#endif // MAINWINDOW_H

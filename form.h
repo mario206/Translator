@@ -1,4 +1,4 @@
-﻿#ifndef FORM_H
+#ifndef FORM_H
 #define FORM_H
 
 #include <QWidget>
@@ -20,24 +20,33 @@ class Form : public QWidget
     Q_OBJECT
 
 public:
+
     static Form* Instance();
     void setWord(Words Word);
+    void setSentences(QString text);
     void show();
     void timerEvent(QTimerEvent *);
+
 private:
     Form();
     Form(QWidget* parent,Words word);
     ~Form();
-    void InitWindow();
-    void leaveEvent(QEvent *);
+
+    void InitWordWindow();
+    void InitSentencesWindow();
+    void leaveEvent(QEvent *);  
+
+private:
     Words m_word;
+    QString sentences;
+    //
     int m_timerId;
     static bool hadInit;
 
     QVBoxLayout* up;
     QVBoxLayout* down;
-private:
 
+private:
     // 下载语音
     QNetworkAccessManager m_net_manager;
     QNetworkReply* m_reply;

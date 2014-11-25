@@ -105,10 +105,12 @@ void SelectedText::checkSelectedText()
         SendMessage(m_hwnd,WM_COPY,0,0);
         QString str = m_board->text();
         if(str != m_lastString) {
+            //QApplication::clipboard()->setText(m_lastString);
             emit newtextselected(str);
         }
         else
         {
+       // m_board->setText("@@#@@#");
         SetForegroundWindow(m_hwnd);
         connect(m_board,SIGNAL(dataChanged()),this,SLOT(textCopyFinished()));
         keybd_event(VK_CONTROL, 0x1D, KEYEVENTF_EXTENDEDKEY | 0, 0);
@@ -127,14 +129,14 @@ void SelectedText::textCopyFinished()
 {
     disconnect(m_board,SIGNAL(dataChanged()),this,SLOT(textCopyFinished()));
     QString str = m_board->text();
-
    // TCHAR buffer[256];
     //GetWindowText(hwnd,buffer,256);
 
    // QString title = QString::fromWCharArray(buffer);
     if(!str.isEmpty() && str != m_lastString)
     {
-        qDebug() << str << endl;
+        //qDebug() << str << endl;
+        m_board->setText(m_lastString);
         emit newtextselected(str);
 
 

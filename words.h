@@ -1,4 +1,4 @@
-﻿#include <QString>
+#include <QString>
 #include <QVector>
 #ifndef WORDS_H
 #define WORDS_H
@@ -14,6 +14,4 @@ public:
     QString query;
     QString voice_url;
 };
-
-
 #endif // WORDS_H
