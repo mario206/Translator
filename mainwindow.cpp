@@ -140,6 +140,8 @@ void MainWindow::timerEvent(QTimerEvent *)
 void MainWindow::newselectedtext(QString str)
 {
 
+    if(str.indexOf("file:") == 0)
+        return;
     Translator* translator = new Translator(this,str);
     connect(translator,SIGNAL(translateWordFinished(Words)),this,SLOT(translateWordFinished(Words)));
     connect(translator,SIGNAL(translateSentencesFinished(QString)),this,SLOT(translateSentencesFinished(QString)));
