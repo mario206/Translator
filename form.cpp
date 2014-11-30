@@ -197,7 +197,7 @@ void Form::timerEvent(QTimerEvent *)
     if(rect.y() > point.y())
     {
 //        qDebug() << "鼠标在窗体上面";
-        rect.adjust(0,-100,0,0);
+        rect.adjust(0,-50,0,0);
 //        qDebug() << point;
 //        qDebug() << rect;
     }
@@ -207,7 +207,7 @@ void Form::timerEvent(QTimerEvent *)
         qDebug() << "before addjust:" << rect;
 
 //        qDebug() << "鼠标在窗体下面";
-        rect.adjust(0,0,0,100);
+        rect.adjust(0,0,0,50);
         qDebug() << "after addjust:" << rect;
 //        qDebug() << point;
 //        qDebug() << rect;
@@ -221,3 +221,4 @@ void Form::timerEvent(QTimerEvent *)
 
 
 }
+

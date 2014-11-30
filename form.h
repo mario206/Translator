@@ -26,7 +26,6 @@ public:
     void setSentences(QString text);
     void show();
     void timerEvent(QTimerEvent *);
-
 private:
     Form();
     Form(QWidget* parent,Words word);
