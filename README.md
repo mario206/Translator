@@ -2,7 +2,7 @@
 ==========
 **开发环境:** Qt、C++，Win32
 
-***运行平台：**
+**运行平台：**
      Windows 7 及以上
 
 **开发原因：** Windows下划词翻译软件太搓。
@@ -20,7 +20,7 @@
 
 ### Gif
 如果划词没有反应，可能是你需要设置代理才能上网，可以使用 [Proxifier](https://www.proxifier.com/) 设置全局代理。
-
+或者是有道API有问题，2018/04/19试了下还是OK的
 [Demo Gif](https://github.com/mario206/Translator/blob/master/demo.gif)
 ![](https://github.com/mario206/Translator/blob/master/demo.gif)
 
